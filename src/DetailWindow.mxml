@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   close="PopUpManager.removePopUp(this);" borderAlpha="0.75" title="{book.title}"
+			   width="800" height="580">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			import mx.collections.ArrayCollection;
+			[Bindable]
+			public var book:Object = new Object();
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:HGroup  verticalAlign="middle" width="100%">
+		<s:VGroup horizontalAlign="center" height="202" y="10">
+			<mx:Image height="100" width="70" source="{book.image}"/>
+			<s:Label  text="ISBN: {book.isbn13}"/>
+		</s:VGroup>
+		<s:VGroup>
+			<s:HGroup>
+				<mx:Spacer width="18"/>
+				<mx:Form id="detail_form" color="0x323232" width="100%" paddingBottom="0">
+					<mx:FormItem label="书名：" paddingTop="0" paddingBottom="0">
+						<s:Label text="{book.title}"/>
+					</mx:FormItem>
+					<mx:FormItem label="作者：" paddingTop="0" paddingBottom="0">
+						<s:Label text="{book.author}"/>
+					</mx:FormItem>
+				</mx:Form>
+			</s:HGroup>
+			<s:HGroup>
+				<mx:Form width="100%" paddingTop="0" paddingBottom="0">
+					<mx:FormItem label="评分：" paddingTop="0" paddingBottom="0">
+						<s:Label text="{book.rating}({book.numRaters}人评价)"/>
+					</mx:FormItem>
+					<mx:FormItem label="价格：" paddingTop="0" paddingBottom="0">
+						<s:Label text="{book.price}"/>
+					</mx:FormItem>
+					<mx:FormItem label="页数：" paddingTop="0" paddingBottom="0">
+						<s:Label text="{book.pages}"/>
+					</mx:FormItem>
+					<mx:FormItem label="出版日期：" paddingTop="0" paddingBottom="0">
+						<s:Label text="{book.pubdate}"/>
+					</mx:FormItem>
+					<mx:FormItem label="出版社：" paddingTop="0" paddingBottom="0">
+						<s:Label text="{book.publisher}"/>
+					</mx:FormItem>
+				</mx:Form>	
+				<mx:Panel title="常用tag：">
+					<mx:BarChart id="bar" height="130" width="400" color="0x323232"
+								 showDataTips="true" dataProvider="{book.tagArr}" >
+						
+						<mx:verticalAxis>
+							<mx:CategoryAxis categoryField="name"/>
+						</mx:verticalAxis>
+						
+						<mx:series>
+							<mx:BarSeries yField="name" xField="count" />
+						</mx:series>
+					</mx:BarChart>
+				</mx:Panel>
+			</s:HGroup>
+		</s:VGroup>
+	</s:HGroup>	
+	<s:VGroup width="100%">
+		<s:Label text="内容简介："/>
+		<s:TextArea width="100%" text="{(book.summary &amp;&amp; book.summary!='')?book.summary:'暂无'}" 
+					borderVisible="false" editable="false"/>
+		<s:Label text="作者简介："/>
+		<s:TextArea width="100%" text="{book.author_intro &amp;&amp; book.author_intro!=''?book.author_intro:'暂无'}" 
+					borderVisible="false" editable="false" />	
+	</s:VGroup>
+	
+</s:TitleWindow>
